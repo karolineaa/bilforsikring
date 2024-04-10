@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 
 interface InputFieldProps {
   placeholder?: string;
-  type: string;
+  type?: "number" | "text" | "email";
   maxLength?: number;
   name: string;
 }

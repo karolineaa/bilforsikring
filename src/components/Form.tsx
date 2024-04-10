@@ -7,6 +7,8 @@ import "./Form.css";
 import Button from "./Button";
 import Label from "./Label";
 import InputField from "./InputField";
+import Dropdown from "./Dropdown";
+import InfoButton from "./InfoButton";
 
 export interface IFormInput {
   registreringsnummer: string;
@@ -71,103 +73,31 @@ export const Form: React.FC = () => {
 
   const onSubmit = (data: IFormInput) => {
     console.log(data);
-    console.log("Pris: ", pris);
     const grunnpris = 600;
+    console.log("Pris: ", data.bonus * grunnpris);
     setPris(data.bonus * grunnpris);
-  };
-
-  /* For å toggle "Vis info" på bonus */
-  const [visPopup, setVisPopup] = useState(false);
-
-  const togglePopup = () => {
-    setVisPopup(!visPopup);
   };
 
   return (
     <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col max-w[800px]"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
         <Label value="Bilens registreringsnummer" />
         <InputField
           name="registreringsnummer"
-          type="text"
           maxLength={8}
           placeholder="F. eks. AB 12345"
         />
 
         <span className="inline-flex items-center relative">
           <Label value="Din bonus" />
-          <button type="button" className="p-2.5 mt-4" onClick={togglePopup}>
-            <svg
-              className="w-7 h-7 md:w-6 md:h-6 text-gray-800 mr-1"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="1.2"
-                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-
-            <span className="sr-only">Mer info om bonus</span>
-            {visPopup && (
-              <div className="absolute top-full transform -translate-x-1/3 bg-neutral-100 p-4 w-72 shadow-sm rounded-sm z-10">
-                <p>
-                  Bonus er en 'belønning' du får i form av redusert
-                  forsikringspris hvis du ikke bruker forsikringen. Du får
-                  høyere bonus for hvert år du kjører skadefritt, inntil du har
-                  nådd toppbonus på 75 prosent.
-                </p>
-              </div>
-            )}
-          </button>
+          <InfoButton
+            title="Mer info om bonus"
+            text="Bonus er en 'belønning' du får i form av redusert forsikringspris
+            hvis du ikke bruker forsikringen. Du får høyere bonus for hvert år
+            du kjører skadefritt, inntil du har nådd toppbonus på 75 prosent."
+          />
         </span>
-
-        <select
-          className={
-            "w-full md:w-1/3 texd-md md:text-sm border border-spacing-1 border-black rounded-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-transparent"
-          }
-          defaultValue={1}
-          {...form.register("bonus")}
-        >
-          <option value={0.8}>75 prosent 5 år</option>
-          <option value={0.8}>75 prosent 4 år</option>
-          <option value={0.8}>75 prosent 3 år</option>
-          <option value={0.8}>75 prosent 2 år</option>
-          <option value={0.8}>75 prosent 1 år</option>
-          <option value={0.8}>75 prosent</option>
-          <option value={0.9}>70 prosent 4 år</option>
-          <option value={0.9}>70 prosent 3 år</option>
-          <option value={0.9}>70 prosent 2 år</option>
-          <option value={0.9}>70 prosent 1 år</option>
-          <option value={0.9}>70 prosent</option>
-          <option value={1}>60 prosent</option>
-          <option value={1.1}>50 prosent</option>
-          <option value={1.2}>40 prosent</option>
-          <option value={1.3}>30 prosent</option>
-          <option value={1.4}>20 prosent</option>
-          <option value={1.5}>10 prosent</option>
-          <option value={1.6}>0 prosent</option>
-          <option value={1.7}>-10 prosent</option>
-          <option value={1.8}>-20 prosent</option>
-          <option value={1.9}>-30 prosent</option>
-          <option value={2}>-40 prosent</option>
-          <option value={2.1}>-50 prosent</option>
-        </select>
-        {form.formState.errors.bonus && (
-          <p className="text-red-700 text-md md:text-xs mt-2">
-            {form.formState.errors.bonus.message}
-          </p>
-        )}
+        <Dropdown name="bonus" />
 
         <Label value="Fødselsnummer" />
         <InputField
@@ -180,11 +110,11 @@ export const Form: React.FC = () => {
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col mr-0 md:mr-4 w-full md:w-1/3">
             <Label value="Fornavn" />
-            <InputField type={"text"} name={"fornavn"} maxLength={40} />
+            <InputField name={"fornavn"} maxLength={40} />
           </div>
           <div className="flex flex-col ml-0 md:ml-4 w-full md:w-1/3">
             <Label value="Etternavn" />
-            <InputField type={"text"} name={"etternavn"} maxLength={40} />
+            <InputField name={"etternavn"} maxLength={40} />
           </div>
         </div>
 
@@ -197,9 +127,9 @@ export const Form: React.FC = () => {
         </div>
 
         {showText && pris !== 0 && (
-          <p className="text-lg md:text-md">
-            Basert på din bonus er prisen på forsikringen beregnet til {pris} kr
-            i måneden.
+          <p className="text-lg md:text-md hover:animate-pulse">
+            Basert på din bonus er prisen på forsikringen beregnet til {pris}
+            kr i måneden.
           </p>
         )}
         {/* DevTool for validering av input */}

@@ -1,4 +1,7 @@
-/* Bytte ut den innebygde pila i selecten med en SVG */
+form {
+    max-width: 800px;   
+  }
+  /* Bytte ut den innebygde pila i selecten med en SVG */
   select {
     -webkit-appearance: none;
     -moz-appearance: none;

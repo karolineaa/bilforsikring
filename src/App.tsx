@@ -8,7 +8,7 @@ function App() {
         Kjøp bilforsikring
       </h1>
 
-      <p className="text-lg md:text-md leading-normal mb-6 w-full md:w-2/3">
+      <p className="text-lg md:text-md leading-normal mb-6 w-full md:w-1/2">
         Det er fire forskjellige forsikringer å velge mellom.
         Ansvarsforsikringer er lovpålagt om kjøretøyet er registrert og skal
         brukes på veien. I tillegg kan du utvide forsikringen avhengig av hvor
