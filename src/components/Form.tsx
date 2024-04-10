@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { DevTool } from "@hookform/devtools";
 import * as yup from "yup";
 import "./Form.css";
+import Button from "./Button";
 
 interface IFormInput {
   registreringsnummer: string;
@@ -238,17 +239,8 @@ export const Form: React.FC = () => {
       )}
 
       <div className="flex mb-6">
-        <input
-          type="submit"
-          value="Beregn pris"
-          className="mt-8 bg-black text-white font-bold rounded-full text-lg md:text-sm px-8 md:px-4 mr-3 md:mr-2 h-14 md:h-8 cursor-pointer"
-        />
-        <input
-          type="button"
-          value="Avbryt"
-          onClick={handleCancel}
-          className="mt-8 border-1 border-black text-black font-bold rounded-full text-lg md:text-sm px-8 md:px-4 ml-3 md:ml-2 h-14 md:h-8 cursor-pointer"
-        />
+        <Button value="Beregn pris" type="submit" />
+        <Button value="Avbryt" type="button" onClick={handleCancel} />
       </div>
       {showText && pris !== 0 && (
         <p className="text-md">
