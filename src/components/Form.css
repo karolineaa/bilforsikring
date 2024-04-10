@@ -1,0 +1,51 @@
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;   
+  }
+  
+  label {
+    margin-top: 24px;
+    margin-bottom: 5px;
+  }
+    
+  .input-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input {
+    border: 1px solid #000000;
+    border-radius: 2px;
+  }
+
+
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    background-image: url("./arrow-down.svg");
+    background-size: 1rem;
+    background-repeat: no-repeat;
+    background-position-x: 97%;
+    background-position-y: 7px;
+    padding: 1rem;
+    padding: 5px 10px;
+    border: 1px solid #000000;
+    border-radius: 2px;
+  }
+  
+  
+  p {
+    color: #aa1f24;
+    margin: 5px 0 0 0;
+    font-size: small;
+  }
+
+  /* Remove up/down arrows on Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Form } from "./components/Form";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="m-4 md:m-12">
+      <h1 className="text-4xl font-regular mb-4">Kjøp bilforsikring</h1>
+      <div className="text-md mb-8 w-full md:w-1/2">
+        Det er fire forskjellige forsikringer å velge mellom.
+        Ansvarsforsikringer er lovpålagt om kjøretøyet er registrert og skal
+        brukes på veien. I tillegg kan du utvide forsikringen avhengig av hvor
+        gammel bilen din er og hvordan du bruker den.
+      </div>
+      <Form />
     </div>
   );
 }
