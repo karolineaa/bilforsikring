@@ -11,10 +11,10 @@ const Button: React.FC<ButtonProps> = ({ type, onClick, value }) => {
     <button
       type={type}
       onClick={onClick}
-      className={`hover:translate-x-2 hover:skew-y-2 mt-8 font-bold rounded-full text-lg md:text-sm px-8 md:px-4 md:ml-2 h-14 md:h-8 cursor-pointer ${
+      className={`mt-8 font-bold rounded-full text-lg md:text-sm px-8 md:px-4 md:ml-2 h-14 md:h-8 cursor-pointer transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 ${
         type === "submit"
-          ? "bg-black text-white mr-3 hover:scale-150"
-          : "border border-spacing-1 border-black text-black ml-3 hover:scale-90"
+          ? "bg-black text-white mr-3 hover:bg-gray-800"
+          : "border border-spacing-1 border-black text-black ml-3 hover:bg-neutral-100"
       }`}
     >
       {value}

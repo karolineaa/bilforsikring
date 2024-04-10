@@ -16,7 +16,7 @@ const InfoButton: React.FC<InfoButtonProps> = ({ text, title }) => {
   return (
     <button type="button" className="p-2.5 mt-4" onClick={togglePopup}>
       <svg
-        className="w-7 h-7 md:w-6 md:h-6 text-gray-800 mr-1 hover:animate-pulse"
+        className="w-7 h-7 md:w-6 md:h-6 hover:text-gray-800 mr-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-150 duration-300"
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
