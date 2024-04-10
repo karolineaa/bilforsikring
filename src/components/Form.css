@@ -35,13 +35,26 @@ form {
     border: 1px solid #000000;
     border-radius: 2px;
   }
-  
-  
-  p {
-    color: #aa1f24;
-    margin: 5px 0 0 0;
-    font-size: small;
+
+  @media screen and (max-width: 768px) {
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: transparent;
+        background-image: url("./arrow-down.svg");
+        background-size: 1.6rem;
+        background-repeat: no-repeat;
+        background-position-x: 96%;
+        background-position-y: 10px;
+        padding: 1rem;
+        padding: 5px 10px;
+        border: 1px solid #000000;
+        border-radius: 1px;
+      }
   }
+  
+  
 
   /* Remove up/down arrows on Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

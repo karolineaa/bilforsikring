@@ -15,6 +15,7 @@ interface IFormInput {
 }
 
 export const Form: React.FC = () => {
+  /* Yup validering */
   const schema = yup.object().shape({
     registreringsnummer: yup
       .string()
@@ -52,9 +53,20 @@ export const Form: React.FC = () => {
     control,
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IFormInput>({ mode: "onBlur", resolver: yupResolver(schema) });
 
+  /* For å tømme skjemaet og beregning av pris når man trykker på "Avbryt" */
+  const [showText, setShowText] = useState(true);
+  const handleCancel = () => {
+    reset();
+    if (pris) {
+      setShowText(false);
+    }
+  };
+
+  /* For å håndtere og regne ut pris basert på bonus når man trykker på "Beregn pris" */
   const [pris, setPris] = useState(0);
 
   const onSubmit = (data: IFormInput) => {
@@ -64,6 +76,7 @@ export const Form: React.FC = () => {
     setPris(data.bonus * grunnpris);
   };
 
+  /* For å toggle "Vis info" på bonus */
   const [visPopup, setVisPopup] = useState(false);
 
   const togglePopup = () => {
@@ -72,10 +85,10 @@ export const Form: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Bilens registreringsnummer</label>
+      <label className="text-xl md:text-md">Bilens registreringsnummer</label>
       <input
         placeholder="F. eks. AB 12345"
-        className={`w-full md:w-1/3 text-sm h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
+        className={`w-full md:w-1/3 texd-md md:text-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
           errors.registreringsnummer
             ? "focus:ring-red-700"
             : "focus:ring-neutral-300"
@@ -83,18 +96,21 @@ export const Form: React.FC = () => {
         {...register("registreringsnummer")}
       />
       {errors.registreringsnummer && (
-        <p>{errors.registreringsnummer.message}</p>
+        <p className="text-red-700 text-md md:text-xs mt-2">
+          {errors.registreringsnummer.message}
+        </p>
       )}
 
-      <span className="inline-flex items-center">
-        <label>Din bonus</label>{" "}
+      <span className="inline-flex items-center relative">
+        <label className="text-xl md:text-md">Din bonus</label>
         <button
           type="button"
-          className="p-2.5 relative flex items-center mt-3.5"
+          className="p-2.5 mt-4"
+          style={{ borderRadius: "50%" }}
           onClick={togglePopup}
         >
           <svg
-            className="w-6 h-6 text-gray-800 mr-1"
+            className="w-7 h-7 md:w-6 md:h-6 text-gray-800 mr-1"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -104,26 +120,30 @@ export const Form: React.FC = () => {
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.2"
               d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
+
           <span className="sr-only">Mer info om bonus</span>
           {visPopup && (
-            <span className="absolute top-full left-1/2 transform -translate-x-1/3 bg-neutral-100 p-4 w-72 shadow-md rounded-sm z-100">
-              Bonus er en 'belønning' du får i form av redusert forsikringspris
-              hvis du ikke bruker forsikringen. Du får høyere bonus for hvert år
-              du kjører skadefritt, inntil du har nådd toppbonus på 75 prosent.
-            </span>
+            <div className="absolute top-full  transform -translate-x-1/3 bg-neutral-100 p-4 w-72 shadow-sm rounded-sm z-10">
+              <p>
+                Bonus er en 'belønning' du får i form av redusert
+                forsikringspris hvis du ikke bruker forsikringen. Du får høyere
+                bonus for hvert år du kjører skadefritt, inntil du har nådd
+                toppbonus på 75 prosent.
+              </p>
+            </div>
           )}
         </button>
       </span>
 
       <select
         className={
-          "w-full md:w-1/3 text-sm h-8 px-2.5 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-transparent"
+          "w-full md:w-1/3 texd-md md:text-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-transparent"
         }
         defaultValue={1}
         {...register("bonus")}
@@ -152,50 +172,70 @@ export const Form: React.FC = () => {
         <option value={2}>-40 prosent</option>
         <option value={2.1}>-50 prosent</option>
       </select>
-      {errors.bonus && <p>{errors.bonus.message}</p>}
+      {errors.bonus && (
+        <p className="text-red-700 text-md md:text-xs mt-2">
+          {errors.bonus.message}
+        </p>
+      )}
 
-      <label>Fødselsnummer</label>
+      <label className="text-xl md:text-md">Fødselsnummer</label>
       <input
         placeholder="11 siffer"
         type="text"
         maxLength={11}
-        className={`w-full md:w-1/3 text-sm h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
+        className={`w-full md:w-1/3 texd-md md:text-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
           errors.fødselsnummer ? "focus:ring-red-700" : "focus:ring-neutral-300"
         }`}
         {...register("fødselsnummer")}
       />
-      {errors.fødselsnummer && <p>{errors.fødselsnummer.message}</p>}
+      {errors.fødselsnummer && (
+        <p className="text-red-700 text-md md:text-xs mt-2">
+          {errors.fødselsnummer.message}
+        </p>
+      )}
 
       <div className="flex flex-col md:flex-row">
         <div className="input-field mr-0 md:mr-4 w-full md:w-1/3">
-          <label>Fornavn</label>
+          <label className="text-xl md:text-md">Fornavn</label>
           <input
-            className={`text-sm h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
+            className={`texd-md md:text-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
               errors.fornavn ? "focus:ring-red-700" : "focus:ring-neutral-300"
             }`}
             {...register("fornavn")}
           />
-          {errors.fornavn && <p>{errors.fornavn.message}</p>}
+          {errors.fornavn && (
+            <p className="text-red-700 text-md md:text-xs mt-2">
+              {errors.fornavn.message}
+            </p>
+          )}
         </div>
         <div className="input-field ml-0 md:ml-4 w-full md:w-1/3">
-          <label>Etternavn</label>
+          <label className="text-xl md:text-md">Etternavn</label>
           <input
-            className={`text-sm h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
+            className={`texd-md md:text-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
               errors.etternavn ? "focus:ring-red-700" : "focus:ring-neutral-300"
             }`}
             {...register("etternavn")}
           />
-          {errors.etternavn && <p>{errors.etternavn.message}</p>}
+          {errors.etternavn && (
+            <p className="text-red-700 text-md md:text-xs mt-2">
+              {errors.etternavn.message}
+            </p>
+          )}
         </div>
       </div>
-      <label>E-post</label>
+      <label className="text-xl md:text-md">E-post</label>
       <input
-        className={`w-full md:w-1/3 text-sm h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
+        className={`w-full md:w-1/3 texd-md md:text-sm h-12 md:h-8 px-2.5 focus:outline-none focus:ring-2 focus:border-transparent ${
           errors.epost ? "focus:ring-red-700" : "focus:ring-neutral-300"
         }`}
         {...register("epost")}
       />
-      {errors.epost && <p>{errors.epost.message}</p>}
+      {errors.epost && (
+        <p className="text-red-700 text-md md:text-xs mt-2">
+          {errors.epost.message}
+        </p>
+      )}
 
       <div className="flex mb-6">
         <input
@@ -206,15 +246,17 @@ export const Form: React.FC = () => {
         <input
           type="button"
           value="Avbryt"
+          onClick={handleCancel}
           className="mt-8 border-1 border-black text-black font-bold rounded-full text-lg md:text-sm px-8 md:px-4 ml-3 md:ml-2 h-14 md:h-8 cursor-pointer"
         />
       </div>
-      {pris !== 0 && (
-        <div className="text-md">
+      {showText && pris !== 0 && (
+        <p className="text-md">
           Basert på din bonus er prisen på forsikringen beregnet til {pris} kr i
           måneden.
-        </div>
+        </p>
       )}
+      {/* DevTool for validering av input */}
       <DevTool control={control} />
     </form>
   );
