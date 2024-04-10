@@ -101,7 +101,7 @@ export const Form: React.FC = () => {
 
         <Label value="Fødselsnummer" />
         <InputField
-          placeholder={"Fødselsnummer"}
+          placeholder={"11 siffer"}
           type={"number"}
           maxLength={11}
           name={"fødselsnummer"}
